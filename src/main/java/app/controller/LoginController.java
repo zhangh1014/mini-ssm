@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import app.common.ConstValue;
 import app.common.Message.MessageType;
+import app.conf.exception.ServiceException;
 import app.conf.springMvc.ControllerBase;
-import app.exception.ServiceException;
 import app.service.ChangePwdService;
 
 @Controller

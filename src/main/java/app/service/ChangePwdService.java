@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import app.exception.ServiceException;
+import app.conf.exception.ServiceException;
 import app.mapper.LoginUserMapper;
 import app.model.LoginUserModel;
 
