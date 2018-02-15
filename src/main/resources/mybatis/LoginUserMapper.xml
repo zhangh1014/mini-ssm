@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="app.mapper.LoginUserMapper">
+
+  <resultMap id="LoginUserModel_ResultMap" type="LoginUserModel">
+  	<id property="loginName" column="LoginName" />
+  	<result property="companyCd" column="companyCd" />
+  	<result property="orgCd" column="OrgCd" />
+  	<result property="userCd" column="UserCd" />
+  	<result property="password" column="Password" />
+  	<result property="salt" column="Salt" />
+  	<result property="roles" column="Roles" />
+  </resultMap>
+
+  <insert id="insLoginUser" parameterType="LoginUserModel">
+    <![CDATA[
+	INSERT INTO LoginUser
+                (CompanyCd
+                ,OrgCd
+                ,UserCd
+                ,LoginName
+                ,Password
+                ,Salt
+                ,Roles)
+         VALUES
+                (#{companyCd}
+                ,#{orgCd}
+                ,#{userCd}
+                ,#{loginName}
+                ,#{password}
+                ,#{salt}
+                ,#{roles})
+    ]]>
+  </insert>
+  
+  <delete id="delLoginUserByPk" parameterType="LoginUserModel">
+    <![CDATA[
+	DELETE FROM LoginUser
+     WHERE 1=1
+       AND LoginName = #{loginName}
+    ]]>
+  </delete>
+  
+  <update id="updLoginUserByPk" parameterType="LoginUserModel">
+    <![CDATA[
+	UPDATE LoginUser
+       SET CompanyCd = #{companyCd}
+          ,OrgCd = #{orgCd}
+          ,UserCd = #{userCd}
+          ,LoginName = #{loginName}
+          ,Password = #{password}
+          ,Salt = #{salt}
+          ,Roles = #{roles}
+     WHERE 1=1
+       AND LoginName = #{loginName}
+    ]]>
+  </update>
+  
+  <select id="selLoginUserByPk" parameterType="LoginUserModel" resultMap="LoginUserModel_ResultMap">
+    <![CDATA[
+	SELECT
+       CompanyCd
+      ,OrgCd
+      ,UserCd
+      ,LoginName
+      ,Password
+      ,Salt
+      ,Roles
+    FROM
+      LoginUser
+    WHERE 1=1
+      AND LoginName = #{loginName}
+    ]]>
+  </select>
+  
+  <select id="selLoginUserByCondition" parameterType="LoginUserModel" resultMap="LoginUserModel_ResultMap">
+    <![CDATA[
+	SELECT
+       CompanyCd
+      ,OrgCd
+      ,UserCd
+      ,LoginName
+      ,Password
+      ,Salt
+      ,Roles
+    FROM
+      LoginUser
+    WHERE 1=1
+      AND (#{companyCd} IS NULL OR #{companyCd} = '' OR CompanyCd = #{companyCd})
+      AND (#{orgCd} IS NULL OR #{orgCd} = '' OR OrgCd = #{orgCd})
+      AND (#{userCd} IS NULL OR #{userCd} = '' OR UserCd = #{userCd})
+      AND (#{loginName} IS NULL OR #{loginName} = '' OR LoginName = #{loginName})
+      AND (#{password} IS NULL OR #{password} = '' OR Password = #{password})
+      AND (#{salt} IS NULL OR #{salt} = '' OR Salt = #{salt})
+      AND (#{roles} IS NULL OR #{roles} = '' OR Roles = #{roles})
+    ]]>
+  </select>
+</mapper>

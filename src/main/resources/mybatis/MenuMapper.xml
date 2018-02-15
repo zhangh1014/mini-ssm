@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="app.mapper.MenuMapper">
+
+  <resultMap id="MenuModel_ResultMap" type="MenuModel">
+  	<id property="menuId" column="MenuId" />
+  	<result property="parentMenuId" column="ParentMenuId" />
+  	<result property="menuName" column="MenuName" />
+  	<result property="menuLevel" column="MenuLevel" />
+  	<result property="url" column="Url" />
+  	<result property="icon" column="Icon" />
+  	<result property="sort" column="Sort" />
+  	<result property="remarks" column="Remarks" />
+  	<result property="roles" column="Roles" />
+  	<result property="permissions" column="Permissions" />
+  </resultMap>
+
+  <insert id="insMenu" parameterType="MenuModel">
+    <![CDATA[
+	INSERT INTO Menu
+                (ParentMenuId
+                ,MenuId
+                ,MenuName
+                ,MenuLevel
+                ,Url
+                ,Icon
+                ,Sort
+                ,Remarks
+                ,Roles
+                ,Permissions)
+         VALUES
+                (#{parentMenuId}
+                ,#{menuId}
+                ,#{menuName}
+                ,#{menuLevel}
+                ,#{url}
+                ,#{icon}
+                ,#{sort}
+                ,#{remarks}
+                ,#{roles}
+                ,#{permissions})
+    ]]>
+  </insert>
+  
+  <delete id="delMenuByPk" parameterType="MenuModel">
+    <![CDATA[
+	DELETE FROM Menu
+     WHERE 1=1
+       AND MenuId = #{menuId}
+    ]]>
+  </delete>
+  
+  <update id="updMenuByPk" parameterType="MenuModel">
+    <![CDATA[
+	UPDATE Menu
+       SET ParentMenuId = #{parentMenuId}
+          ,MenuId = #{menuId}
+          ,MenuName = #{menuName}
+          ,MenuLevel = #{menuLevel}
+          ,Url = #{url}
+          ,Icon = #{icon}
+          ,Sort = #{sort}
+          ,Remarks = #{remarks}
+          ,Roles = #{roles}
+          ,Permissions = #{permissions}
+     WHERE 1=1
+       AND MenuId = #{menuId}
+    ]]>
+  </update>
+  
+  <select id="selMenuByPk" parameterType="MenuModel" resultMap="MenuModel_ResultMap">
+    <![CDATA[
+	SELECT
+       ParentMenuId
+      ,MenuId
+      ,MenuName
+      ,MenuLevel
+      ,Url
+      ,Icon
+      ,Sort
+      ,Remarks
+      ,Roles
+      ,Permissions
+    FROM
+      Menu
+    WHERE 1=1
+      AND MenuId = #{menuId}
+    ]]>
+  </select>
+  
+  <select id="selMenuByCondition" parameterType="MenuModel" resultMap="MenuModel_ResultMap">
+    <![CDATA[
+	SELECT
+       ParentMenuId
+      ,MenuId
+      ,MenuName
+      ,MenuLevel
+      ,Url
+      ,Icon
+      ,Sort
+      ,Remarks
+      ,Roles
+      ,Permissions
+    FROM
+      Menu
+    WHERE 1=1
+      AND (#{parentMenuId} IS NULL OR #{parentMenuId} = '' OR ParentMenuId = #{parentMenuId})
+      AND (#{menuId} IS NULL OR #{menuId} = '' OR MenuId = #{menuId})
+      AND (#{menuName} IS NULL OR #{menuName} = '' OR MenuName = #{menuName})
+      AND (#{menuLevel} IS NULL OR #{menuLevel} = '' OR MenuLevel = #{menuLevel})
+      AND (#{url} IS NULL OR #{url} = '' OR Url = #{url})
+      AND (#{icon} IS NULL OR #{icon} = '' OR Icon = #{icon})
+      AND (#{sort} IS NULL OR #{sort} = '' OR Sort = #{sort})
+      AND (#{remarks} IS NULL OR #{remarks} = '' OR Remarks = #{remarks})
+      AND (#{roles} IS NULL OR #{roles} = '' OR Roles = #{roles})
+      AND (#{permissions} IS NULL OR #{permissions} = '' OR Permissions = #{permissions})
+    ]]>
+  </select>
+  
+  <select id="selAllMenu" resultMap="MenuModel_ResultMap">
+    <![CDATA[
+	SELECT
+       ParentMenuId
+      ,MenuId
+      ,MenuName
+      ,MenuLevel
+      ,Url
+      ,Icon
+      ,Sort
+      ,Remarks
+      ,Roles
+      ,Permissions
+    FROM
+      Menu
+    ]]>
+  </select>
+</mapper>

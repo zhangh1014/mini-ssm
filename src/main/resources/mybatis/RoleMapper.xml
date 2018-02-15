@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="app.mapper.RoleMapper">
+
+  <resultMap id="RoleModel_ResultMap" type="RoleModel">
+  	<id property="roleId" column="RoleId" />
+  	<result property="roleName" column="RoleName" />
+  	<result property="sort" column="Sort" />
+  	<result property="permissions" column="Permissions" />
+  </resultMap>
+
+  <insert id="insRole" parameterType="RoleModel">
+    <![CDATA[
+	INSERT INTO Role
+                (RoleId
+                ,RoleName
+                ,Sort
+                ,Permissions)
+         VALUES
+                (#{roleId}
+                ,#{roleName}
+                ,#{sort}
+                ,#{permissions})
+    ]]>
+  </insert>
+  
+  <delete id="delRoleByPk" parameterType="RoleModel">
+    <![CDATA[
+	DELETE FROM Role
+     WHERE 1=1
+       AND RoleId = #{roleId}
+    ]]>
+  </delete>
+  
+  <update id="updRoleByPk" parameterType="RoleModel">
+    <![CDATA[
+	UPDATE Role
+       SET RoleId = #{roleId}
+          ,RoleName = #{roleName}
+          ,Sort = #{sort}
+          ,Permissions = #{permissions}
+     WHERE 1=1
+       AND RoleId = #{roleId}
+    ]]>
+  </update>
+  
+  <select id="selRoleByPk" parameterType="RoleModel" resultMap="RoleModel_ResultMap">
+    <![CDATA[
+	SELECT
+       RoleId
+      ,RoleName
+      ,Sort
+      ,Permissions
+    FROM
+      Role
+    WHERE 1=1
+      AND RoleId = #{roleId}
+    ]]>
+  </select>
+  
+  <select id="selRoleByCondition" parameterType="RoleModel" resultMap="RoleModel_ResultMap">
+    <![CDATA[
+	SELECT
+       RoleId
+      ,RoleName
+      ,Sort
+      ,Permissions
+    FROM
+      Role
+    WHERE 1=1
+      AND (#{roleId} IS NULL OR #{roleId} = '' OR RoleId = #{roleId})
+      AND (#{roleName} IS NULL OR #{roleName} = '' OR RoleName = #{roleName})
+      AND (#{sort} IS NULL OR #{sort} = '' OR Sort = #{sort})
+      AND (#{permissions} IS NULL OR #{permissions} = '' OR Permissions = #{permissions})
+    ]]>
+  </select>
+</mapper>
