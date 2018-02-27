@@ -1,6 +1,5 @@
 package app.conf;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.sql.DataSource;
@@ -15,6 +14,7 @@ import org.lechisoft.minifw.jdbc.datasource.DataSourceProvider.DataSourceType;
 import org.lechisoft.minifw.mybaits.SqlInterceptor;
 import org.lechisoft.minifw.mybaits.SqlInterceptor.DataBaseType;
 import org.lechisoft.minifw.security.MiniRealm;
+import org.lechisoft.minifw.security.MiniSecurity;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Bean;
@@ -101,15 +101,9 @@ public class SpringConfig {
 		// anno:任何人都可以访问
 		// authc:登录后才能访问，不包括Remember Me用户
 		// user:登录后才能访问，包含Remember Me用户
-		Map<String, String> filterChainDefinitionMap = new HashMap<String, String>();
-		filterChainDefinitionMap.put("/css/**", "anon");
-		filterChainDefinitionMap.put("/img/**", "anon");
-		filterChainDefinitionMap.put("/js/**", "anon");
-		filterChainDefinitionMap.put("/master/**", "anon");
-		filterChainDefinitionMap.put("/login/**", "anon");
-		filterChainDefinitionMap.put("/**", "user");
+		Map<String, String> filterChainDefinitionMap = MiniSecurity.getFilterChainDefinitionMap();
 		filter.setFilterChainDefinitionMap(filterChainDefinitionMap);
-
+		
 		// 指过滤链在身份认证失败时跳转的页面
 		filter.setLoginUrl("/login");
 		// 指过滤链在授权失败时跳转的页面
