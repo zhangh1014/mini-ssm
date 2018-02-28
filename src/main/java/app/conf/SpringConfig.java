@@ -14,7 +14,6 @@ import org.lechisoft.minifw.jdbc.datasource.DataSourceProvider.DataSourceType;
 import org.lechisoft.minifw.mybaits.SqlInterceptor;
 import org.lechisoft.minifw.mybaits.SqlInterceptor.DataBaseType;
 import org.lechisoft.minifw.security.MiniRealm;
-import org.lechisoft.minifw.security.MiniSecurity;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Bean;
@@ -67,8 +66,6 @@ public class SpringConfig {
 
 		return ssf.getObject();
 	}
-	
-	
 
 	@Bean
 	public DbRealmData dbRealmData() {
@@ -92,7 +89,7 @@ public class SpringConfig {
 	@Bean
 	// Shiro 过滤器
 	// Bean的名字必须与Web.xml中Filter代理的名字相同
-	public ShiroFilterFactoryBean shiroFilter(DefaultWebSecurityManager securityManager) {
+	public ShiroFilterFactoryBean shiroFilter(DefaultWebSecurityManager securityManager, DbRealmData dbRealmData) {
 		ShiroFilterFactoryBean filter = new ShiroFilterFactoryBean();
 		filter.setSecurityManager(securityManager);
 
@@ -101,9 +98,9 @@ public class SpringConfig {
 		// anno:任何人都可以访问
 		// authc:登录后才能访问，不包括Remember Me用户
 		// user:登录后才能访问，包含Remember Me用户
-		Map<String, String> filterChainDefinitionMap = MiniSecurity.getFilterChainDefinitionMap();
+		Map<String, String> filterChainDefinitionMap = dbRealmData.getFilterChainDefinitionMap();
 		filter.setFilterChainDefinitionMap(filterChainDefinitionMap);
-		
+
 		// 指过滤链在身份认证失败时跳转的页面
 		filter.setLoginUrl("/login");
 		// 指过滤链在授权失败时跳转的页面
