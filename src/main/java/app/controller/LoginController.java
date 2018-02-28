@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import app.common.ConstValue;
-import app.common.Message.MessageType;
+import app.conf.common.ConstValue;
+import app.conf.common.Message.MessageType;
 import app.conf.exception.ServiceException;
 import app.conf.springMvc.ControllerBase;
 import app.service.ChangePwdService;

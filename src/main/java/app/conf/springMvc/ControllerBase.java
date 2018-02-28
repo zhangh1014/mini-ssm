@@ -8,9 +8,9 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import app.common.ConstValue;
-import app.common.Message;
-import app.common.Message.MessageType;
+import app.conf.common.ConstValue;
+import app.conf.common.Message;
+import app.conf.common.Message.MessageType;
 
 public class ControllerBase {
 

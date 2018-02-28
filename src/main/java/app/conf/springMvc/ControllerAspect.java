@@ -15,8 +15,8 @@ import org.lechisoft.minifw.log.MiniLog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import app.common.ConstValue;
-import app.common.Message;
+import app.conf.common.ConstValue;
+import app.conf.common.Message;
 
 @Component
 @Aspect

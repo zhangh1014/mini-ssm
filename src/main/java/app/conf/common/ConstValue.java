@@ -1,4 +1,4 @@
-package app.common;
+package app.conf.common;
 
 public class ConstValue {
     public static final String REQUEST_MESSAGE_KEY = "message";

@@ -15,7 +15,7 @@ import org.lechisoft.minifw.security.RealmData;
 import org.lechisoft.minifw.security.User;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import app.common.OrderProperties;
+import app.conf.common.OrderProperties;
 import app.mapper.LoginUserMapper;
 import app.mapper.RoleMapper;
 import app.model.LoginUserModel;

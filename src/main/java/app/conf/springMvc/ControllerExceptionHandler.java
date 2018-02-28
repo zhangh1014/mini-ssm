@@ -7,7 +7,7 @@ import org.lechisoft.minifw.log.MiniLog;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import app.common.ConstValue;
+import app.conf.common.ConstValue;
 
 @ControllerAdvice
 public class ControllerExceptionHandler {
