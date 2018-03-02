@@ -1,7 +1,9 @@
 package app.conf;
 
+import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.Filter;
 import javax.sql.DataSource;
 
 import org.apache.ibatis.plugin.Interceptor;
@@ -25,6 +27,7 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import app.shiro.DbRealmData;
+import app.shiro.RolesOrAuthorizationFilter;
 
 @Configuration
 @ComponentScan(basePackageClasses = { app.conf.spring._ComponentScan.class, app.service._ComponentScan.class,
@@ -92,6 +95,11 @@ public class SpringConfig {
 	public ShiroFilterFactoryBean shiroFilter(DefaultWebSecurityManager securityManager, DbRealmData dbRealmData) {
 		ShiroFilterFactoryBean filter = new ShiroFilterFactoryBean();
 		filter.setSecurityManager(securityManager);
+
+		// 默认的角色是And关系，自定义角色过滤器，改为Or关系
+		Map<String, Filter> filters = new HashMap<String, Filter>();
+		filters.put("roles", new RolesOrAuthorizationFilter());
+		filter.setFilters(filters);
 
 		// 指定过滤链
 		// 拦截器的优先级：从上到下，从左到右，如果有匹配的拦截器就会阻断并返回
