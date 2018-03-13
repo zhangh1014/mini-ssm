@@ -16,15 +16,15 @@ import org.lechisoft.minifw.security.User;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import app.conf.common.OrderProperties;
-import app.mapper.LoginUserMapper;
+import app.mapper.AccountMapper;
 import app.mapper.RoleMapper;
-import app.model.LoginUserModel;
+import app.model.AccountModel;
 import app.model.RoleModel;
 
 public class DbRealmData implements RealmData {
 
 	@Autowired
-	private LoginUserMapper loginUserMapper;
+	private AccountMapper accountMapper;
 
 	@Autowired
 	private RoleMapper roleMapper;
@@ -32,19 +32,18 @@ public class DbRealmData implements RealmData {
 	@Override
 	public User getUser(String userName) {
 
-		// get login user by name
-		LoginUserModel loginUser = new LoginUserModel();
-		loginUser.setLoginName(userName);
-		loginUser = loginUserMapper.selLoginUserByPk(loginUser);
+		AccountModel account = new AccountModel();
+		account.setAccount(userName);
+		account = accountMapper.selAccountByPk(account);
 
-		if (null == loginUser) {
+		if (null == account) {
 			return null;
 		}
 
 		User user = new User();
-		user.setUserName(loginUser.getLoginName());
-		user.setPassword(loginUser.getPassword());
-		user.setSalt(loginUser.getSalt());
+		user.setUserName(account.getAccount());
+		user.setPassword(account.getPassword());
+		user.setSalt(account.getSalt());
 		return user;
 	}
 
@@ -52,14 +51,13 @@ public class DbRealmData implements RealmData {
 	public List<String> getRoles(String userName) {
 		List<String> roles = new ArrayList<String>();
 
-		// get login user by name
-		LoginUserModel loginUser = new LoginUserModel();
-		loginUser.setLoginName(userName);
-		loginUser = loginUserMapper.selLoginUserByPk(loginUser);
+		AccountModel account = new AccountModel();
+		account.setAccount(userName);
+		account = accountMapper.selAccountByPk(account);
 
-		if (null != loginUser) {
+		if (null != account) {
 			// get roles string
-			String strRoles = loginUser.getRoles();
+			String strRoles = account.getRoles();
 			if (null != strRoles && !"".equals(strRoles)) {
 				roles.addAll(Arrays.asList(strRoles.split(",")));
 			}
@@ -71,14 +69,13 @@ public class DbRealmData implements RealmData {
 	public List<String> getPermissions(String userName) {
 		List<String> permissions = new ArrayList<String>();
 
-		// get login user by name
-		LoginUserModel loginUser = new LoginUserModel();
-		loginUser.setLoginName(userName);
-		loginUser = loginUserMapper.selLoginUserByPk(loginUser);
+		AccountModel account = new AccountModel();
+		account.setAccount(userName);
+		account = accountMapper.selAccountByPk(account);
 
-		if (null != loginUser) {
+		if (null != account) {
 			// get roles string
-			String strRoles = loginUser.getRoles();
+			String strRoles = account.getRoles();
 			if (null != strRoles && !"".equals(strRoles)) {
 				for (String strRole : strRoles.split(",")) {
 

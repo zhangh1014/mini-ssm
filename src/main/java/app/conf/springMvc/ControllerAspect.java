@@ -16,7 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import app.conf.common.ConstValue;
-import app.conf.common.Message;
+import app.conf.common.ReturnMessage;
 
 @Component
 @Aspect
@@ -50,9 +50,9 @@ public class ControllerAspect {
         // begin:消息处理
         // 如果Session中存在消息，取出并放入Request
         @SuppressWarnings("unchecked")
-        Map<String, Message> messageMap = (Map<String, Message>) session.getAttribute(ConstValue.SESSION_MESSAGE_MAP_KEY);
+        Map<String, ReturnMessage> messageMap = (Map<String, ReturnMessage>) session.getAttribute(ConstValue.SESSION_MESSAGE_MAP_KEY);
         if (messageMap != null) {
-        	Message message = messageMap.get(className);
+        	ReturnMessage message = messageMap.get(className);
             request.setAttribute(ConstValue.REQUEST_MESSAGE_KEY, message);
             messageMap.remove(className);
         }

@@ -4,15 +4,18 @@ import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.lechisoft.minifw.log.MiniLog;
 import org.lechisoft.minifw.security.MiniSecurity;
+import org.lechisoft.minifw.security.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import app.conf.common.ConstValue;
-import app.conf.common.Message.MessageType;
+import app.conf.common.ReturnMessage;
+import app.conf.common.ReturnMessage.MessageType;
 import app.conf.exception.ServiceException;
 import app.conf.springMvc.ControllerBase;
 import app.service.ChangePwdService;
@@ -29,39 +32,43 @@ public class LoginController extends ControllerBase {
 		if (MiniSecurity.isAuthenticated()) {
 			return "redirect:/index";
 		} else {
-			MiniLog.debug(MiniSecurity.getSessionId());
 			return "login";
 		}
 	}
 
+	@ResponseBody
 	@RequestMapping(value = "/signin", method = RequestMethod.POST)
-	public String signin(String userName, String password, Model model) {
-
-		if (null == userName || "".equals(userName) || null == password || "".equals(password)) {
-			this.showMessage("账号或密码错误。", MessageType.Info, LoginController.class);
-			return "redirect:/login";
-		}
-
+	public ReturnMessage signin(@RequestBody User user, Model model) {
+		ReturnMessage returnMessage = new ReturnMessage();
 		try {
-			MiniSecurity.signin(userName, password);
-			MiniSecurity.setSessionAttribute(ConstValue.SESSION_LOGIN_OBJECT_KEY, userName);
-			return "redirect:/index";
+			MiniSecurity.signin(user.getUserName(), user.getPassword());
+			MiniSecurity.setSessionAttribute(ConstValue.SESSION_LOGIN_OBJECT_KEY, user.getUserName());
+			this.showMessage("你好，"+user.getUserName(), MessageType.Info, IndexController.class);
+			
+			return returnMessage;
 		} catch (UnknownAccountException e) {
-			this.showMessage("账号或密码错误。", MessageType.Info, LoginController.class);
-			return "redirect:/login";
+			returnMessage.setTitle("账号或密码错误");
+			returnMessage.setMessage("未知账户");
+			returnMessage.setType(MessageType.Error);
+			return returnMessage;
 		} catch (IncorrectCredentialsException e) {
-			this.showMessage("账号或密码错误。", MessageType.Info, LoginController.class);
-			return "redirect:/login";
+			returnMessage.setTitle("账号或密码错误");
+			returnMessage.setMessage("密码不正确");
+			returnMessage.setType(MessageType.Error);
+			return returnMessage;
 		} catch (Exception e) {
-			this.showMessage("登录异常。", MessageType.Error, LoginController.class);
-			return "redirect:/login";
+			returnMessage.setTitle("账号或密码错误");
+			returnMessage.setMessage("登录异常");
+			returnMessage.setType(MessageType.Error);
+			return returnMessage;
 		}
 	}
 
+	@ResponseBody
 	@RequestMapping(value = "/signout", method = RequestMethod.GET)
 	public String signout(Model model) {
 		MiniSecurity.signout();
-		return "redirect:/login";
+		return "";
 	}
 
 	@ResponseBody

@@ -8,15 +8,15 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import app.conf.exception.ServiceException;
-import app.mapper.LoginUserMapper;
-import app.model.LoginUserModel;
+import app.mapper.AccountMapper;
+import app.model.AccountModel;
 
 @Component
 @Transactional(rollbackFor = { ServiceException.class, Exception.class })
 public class ChangePwdService {
 
 	@Autowired
-	private LoginUserMapper loginUserMapper;
+	private AccountMapper accountMapper;
 
 	/**
 	 * 更改密码
@@ -25,14 +25,14 @@ public class ChangePwdService {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public boolean changePwd(String loginName, String newPwd) throws ServiceException {
+	public boolean changePwd(String account, String newPwd) throws ServiceException {
 
-		LoginUserModel loginUser = new LoginUserModel();
-		loginUser.setLoginName(loginName);
-		loginUser = loginUserMapper.selLoginUserByPk(loginUser);
+		AccountModel accountModel = new AccountModel();
+		accountModel.setAccount(account);
+		accountModel = accountMapper.selAccountByPk(accountModel);
 
-		if (null == loginUser) {
-			throw new ServiceException("更新密码错误：用户" + loginName + "不存在。");
+		if (null == accountModel) {
+			throw new ServiceException("更新密码错误：用户" + account + "不存在。");
 		}
 
 		// salt
@@ -41,14 +41,14 @@ public class ChangePwdService {
 				+ String.valueOf(rdm.nextInt(10));
 		newPwd = MiniSecurity.getHash("MD5", newPwd, salt, 1);
 
-		loginUser.setPassword(newPwd);
-		loginUser.setSalt(salt);
+		accountModel.setPassword(newPwd);
+		accountModel.setSalt(salt);
 
-		int result = loginUserMapper.updLoginUserByPk(loginUser);
+		int result = accountMapper.updAccountByPk(accountModel);
 		if (result != 1) {
 			throw new ServiceException("更新密码失败。");
 		}
-		
+
 		return true;
 	}
 }

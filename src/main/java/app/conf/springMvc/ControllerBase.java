@@ -9,8 +9,8 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import app.conf.common.ConstValue;
-import app.conf.common.Message;
-import app.conf.common.Message.MessageType;
+import app.conf.common.ReturnMessage;
+import app.conf.common.ReturnMessage.MessageType;
 
 public class ControllerBase {
 
@@ -66,9 +66,9 @@ public class ControllerBase {
 	 */
 	public void showMessage(String msg, MessageType msgType) {
 
-		Message message = new Message();
-		message.setMsg(msg);
-		message.setMsgType(msgType);
+		ReturnMessage message = new ReturnMessage();
+		message.setMessage(msg);
+		message.setType(msgType);
 
 		request.setAttribute(ConstValue.REQUEST_MESSAGE_KEY, message);
 	}
@@ -86,18 +86,18 @@ public class ControllerBase {
 		// 消息处理
 		// 将消息加入Session
 		@SuppressWarnings("unchecked")
-		Map<String, Message> messageMap = (Map<String, Message>) session
+		Map<String, ReturnMessage> messageMap = (Map<String, ReturnMessage>) session
 				.getAttribute(ConstValue.SESSION_MESSAGE_MAP_KEY);
 		if (messageMap == null) {
-			messageMap = new HashMap<String, Message>();
+			messageMap = new HashMap<String, ReturnMessage>();
 			session.setAttribute(ConstValue.SESSION_MESSAGE_MAP_KEY, messageMap);
 		}
 
-		Message message = new Message();
-		message.setMsg(msg);
-		message.setMsgType(msgType);
+		ReturnMessage message = new ReturnMessage();
+		message.setMessage(msg);
+		message.setType(msgType);
 
 		messageMap.put(targetController.getName(), message);
 	}
-	
+
 }

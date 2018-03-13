@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="app.mapper.AccountMapper">
+
+  <resultMap id="AccountModel_ResultMap" type="AccountModel">
+  	<id property="account" column="ACCOUNT" />
+  	<result property="userId" column="USER_ID" />
+  	<result property="password" column="PASSWORD" />
+  	<result property="salt" column="SALT" />
+  	<result property="roles" column="ROLES" />
+  	<result property="remarks" column="REMARKS" />
+  	<result property="field01" column="FIELD01" />
+  	<result property="field02" column="FIELD02" />
+  	<result property="field03" column="FIELD03" />
+  	<result property="field04" column="FIELD04" />
+  	<result property="field05" column="FIELD05" />
+  	<result property="createAccount" column="CREATE_ACCOUNT" />
+  	<result property="createDate" column="CREATE_DATE" />
+  	<result property="createTime" column="CREATE_TIME" />
+  	<result property="updateAccount" column="UPDATE_ACCOUNT" />
+  	<result property="updateDate" column="UPDATE_DATE" />
+  	<result property="updateTime" column="UPDATE_TIME" />
+  	<result property="disabledFlg" column="DISABLED_FLG" />
+  	<result property="deleteFlg" column="DELETE_FLG" />
+  </resultMap>
+
+  <insert id="insAccount" parameterType="AccountModel">
+    <![CDATA[
+	INSERT INTO ACCOUNT
+                (USER_ID
+                ,ACCOUNT
+                ,PASSWORD
+                ,SALT
+                ,ROLES
+                ,REMARKS
+                ,FIELD01
+                ,FIELD02
+                ,FIELD03
+                ,FIELD04
+                ,FIELD05
+                ,CREATE_ACCOUNT
+                ,CREATE_DATE
+                ,CREATE_TIME
+                ,UPDATE_ACCOUNT
+                ,UPDATE_DATE
+                ,UPDATE_TIME
+                ,DISABLED_FLG
+                ,DELETE_FLG)
+         VALUES
+                (#{userId}
+                ,#{account}
+                ,#{password}
+                ,#{salt}
+                ,#{roles}
+                ,#{remarks}
+                ,#{field01}
+                ,#{field02}
+                ,#{field03}
+                ,#{field04}
+                ,#{field05}
+                ,#{createAccount}
+                ,#{createDate}
+                ,#{createTime}
+                ,#{updateAccount}
+                ,#{updateDate}
+                ,#{updateTime}
+                ,#{disabledFlg}
+                ,#{deleteFlg})
+    ]]>
+  </insert>
+  
+  <delete id="delAccountByPk" parameterType="AccountModel">
+    <![CDATA[
+	DELETE FROM ACCOUNT
+     WHERE 1=1
+       AND ACCOUNT = #{account}
+    ]]>
+  </delete>
+  
+  <update id="updAccountByPk" parameterType="AccountModel">
+    <![CDATA[
+	UPDATE ACCOUNT
+       SET USER_ID = #{userId}
+          ,ACCOUNT = #{account}
+          ,PASSWORD = #{password}
+          ,SALT = #{salt}
+          ,ROLES = #{roles}
+          ,REMARKS = #{remarks}
+          ,FIELD01 = #{field01}
+          ,FIELD02 = #{field02}
+          ,FIELD03 = #{field03}
+          ,FIELD04 = #{field04}
+          ,FIELD05 = #{field05}
+          ,CREATE_ACCOUNT = #{createAccount}
+          ,CREATE_DATE = #{createDate}
+          ,CREATE_TIME = #{createTime}
+          ,UPDATE_ACCOUNT = #{updateAccount}
+          ,UPDATE_DATE = #{updateDate}
+          ,UPDATE_TIME = #{updateTime}
+          ,DISABLED_FLG = #{disabledFlg}
+          ,DELETE_FLG = #{deleteFlg}
+     WHERE 1=1
+       AND ACCOUNT = #{account}
+    ]]>
+  </update>
+  
+  <select id="selAccountByPk" parameterType="AccountModel" resultMap="AccountModel_ResultMap">
+    <![CDATA[
+	SELECT
+       USER_ID
+      ,ACCOUNT
+      ,PASSWORD
+      ,SALT
+      ,ROLES
+      ,REMARKS
+      ,FIELD01
+      ,FIELD02
+      ,FIELD03
+      ,FIELD04
+      ,FIELD05
+      ,CREATE_ACCOUNT
+      ,CREATE_DATE
+      ,CREATE_TIME
+      ,UPDATE_ACCOUNT
+      ,UPDATE_DATE
+      ,UPDATE_TIME
+      ,DISABLED_FLG
+      ,DELETE_FLG
+    FROM
+      ACCOUNT
+    WHERE 1=1
+      AND ACCOUNT = #{account}
+    ]]>
+  </select>
+  
+  <select id="selAccountByCondition" parameterType="AccountModel" resultMap="AccountModel_ResultMap">
+    <![CDATA[
+	SELECT
+       USER_ID
+      ,ACCOUNT
+      ,PASSWORD
+      ,SALT
+      ,ROLES
+      ,REMARKS
+      ,FIELD01
+      ,FIELD02
+      ,FIELD03
+      ,FIELD04
+      ,FIELD05
+      ,CREATE_ACCOUNT
+      ,CREATE_DATE
+      ,CREATE_TIME
+      ,UPDATE_ACCOUNT
+      ,UPDATE_DATE
+      ,UPDATE_TIME
+      ,DISABLED_FLG
+      ,DELETE_FLG
+    FROM
+      ACCOUNT
+    WHERE 1=1
+      AND (#{userId} IS NULL OR #{userId} = '' OR USER_ID = #{userId})
+      AND (#{account} IS NULL OR #{account} = '' OR ACCOUNT = #{account})
+      AND (#{password} IS NULL OR #{password} = '' OR PASSWORD = #{password})
+      AND (#{salt} IS NULL OR #{salt} = '' OR SALT = #{salt})
+      AND (#{roles} IS NULL OR #{roles} = '' OR ROLES = #{roles})
+      AND (#{remarks} IS NULL OR #{remarks} = '' OR REMARKS = #{remarks})
+      AND (#{field01} IS NULL OR #{field01} = '' OR FIELD01 = #{field01})
+      AND (#{field02} IS NULL OR #{field02} = '' OR FIELD02 = #{field02})
+      AND (#{field03} IS NULL OR #{field03} = '' OR FIELD03 = #{field03})
+      AND (#{field04} IS NULL OR #{field04} = '' OR FIELD04 = #{field04})
+      AND (#{field05} IS NULL OR #{field05} = '' OR FIELD05 = #{field05})
+      AND (#{createAccount} IS NULL OR #{createAccount} = '' OR CREATE_ACCOUNT = #{createAccount})
+      AND (#{createDate} IS NULL OR #{createDate} = '' OR CREATE_DATE = #{createDate})
+      AND (#{createTime} IS NULL OR #{createTime} = '' OR CREATE_TIME = #{createTime})
+      AND (#{updateAccount} IS NULL OR #{updateAccount} = '' OR UPDATE_ACCOUNT = #{updateAccount})
+      AND (#{updateDate} IS NULL OR #{updateDate} = '' OR UPDATE_DATE = #{updateDate})
+      AND (#{updateTime} IS NULL OR #{updateTime} = '' OR UPDATE_TIME = #{updateTime})
+      AND (#{disabledFlg} IS NULL OR #{disabledFlg} = '' OR DISABLED_FLG = #{disabledFlg})
+      AND (#{deleteFlg} IS NULL OR #{deleteFlg} = '' OR DELETE_FLG = #{deleteFlg})
+    ]]>
+  </select>
+</mapper>

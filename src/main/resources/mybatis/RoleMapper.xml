@@ -6,75 +6,89 @@
 <mapper namespace="app.mapper.RoleMapper">
 
   <resultMap id="RoleModel_ResultMap" type="RoleModel">
-  	<id property="roleId" column="RoleId" />
-  	<result property="roleName" column="RoleName" />
-  	<result property="sort" column="Sort" />
-  	<result property="permissions" column="Permissions" />
+  	<id property="roleId" column="ROLE_ID" />
+  	<result property="roleName" column="ROLE_NAME" />
+  	<result property="roleGroup" column="ROLE_GROUP" />
+  	<result property="permissions" column="PERMISSIONS" />
+  	<result property="sort" column="SORT" />
+  	<result property="remarks" column="REMARKS" />
   </resultMap>
 
   <insert id="insRole" parameterType="RoleModel">
     <![CDATA[
-	INSERT INTO Role
-                (RoleId
-                ,RoleName
-                ,Sort
-                ,Permissions)
+	INSERT INTO ROLE
+                (ROLE_ID
+                ,ROLE_NAME
+                ,ROLE_GROUP
+                ,PERMISSIONS
+                ,SORT
+                ,REMARKS)
          VALUES
                 (#{roleId}
                 ,#{roleName}
+                ,#{roleGroup}
+                ,#{permissions}
                 ,#{sort}
-                ,#{permissions})
+                ,#{remarks})
     ]]>
   </insert>
   
   <delete id="delRoleByPk" parameterType="RoleModel">
     <![CDATA[
-	DELETE FROM Role
+	DELETE FROM ROLE
      WHERE 1=1
-       AND RoleId = #{roleId}
+       AND ROLE_ID = #{roleId}
     ]]>
   </delete>
   
   <update id="updRoleByPk" parameterType="RoleModel">
     <![CDATA[
-	UPDATE Role
-       SET RoleId = #{roleId}
-          ,RoleName = #{roleName}
-          ,Sort = #{sort}
-          ,Permissions = #{permissions}
+	UPDATE ROLE
+       SET ROLE_ID = #{roleId}
+          ,ROLE_NAME = #{roleName}
+          ,ROLE_GROUP = #{roleGroup}
+          ,PERMISSIONS = #{permissions}
+          ,SORT = #{sort}
+          ,REMARKS = #{remarks}
      WHERE 1=1
-       AND RoleId = #{roleId}
+       AND ROLE_ID = #{roleId}
     ]]>
   </update>
   
   <select id="selRoleByPk" parameterType="RoleModel" resultMap="RoleModel_ResultMap">
     <![CDATA[
 	SELECT
-       RoleId
-      ,RoleName
-      ,Sort
-      ,Permissions
+       ROLE_ID
+      ,ROLE_NAME
+      ,ROLE_GROUP
+      ,PERMISSIONS
+      ,SORT
+      ,REMARKS
     FROM
-      Role
+      ROLE
     WHERE 1=1
-      AND RoleId = #{roleId}
+      AND ROLE_ID = #{roleId}
     ]]>
   </select>
   
   <select id="selRoleByCondition" parameterType="RoleModel" resultMap="RoleModel_ResultMap">
     <![CDATA[
 	SELECT
-       RoleId
-      ,RoleName
-      ,Sort
-      ,Permissions
+       ROLE_ID
+      ,ROLE_NAME
+      ,ROLE_GROUP
+      ,PERMISSIONS
+      ,SORT
+      ,REMARKS
     FROM
-      Role
+      ROLE
     WHERE 1=1
-      AND (#{roleId} IS NULL OR #{roleId} = '' OR RoleId = #{roleId})
-      AND (#{roleName} IS NULL OR #{roleName} = '' OR RoleName = #{roleName})
-      AND (#{sort} IS NULL OR #{sort} = '' OR Sort = #{sort})
-      AND (#{permissions} IS NULL OR #{permissions} = '' OR Permissions = #{permissions})
+      AND (#{roleId} IS NULL OR #{roleId} = '' OR ROLE_ID = #{roleId})
+      AND (#{roleName} IS NULL OR #{roleName} = '' OR ROLE_NAME = #{roleName})
+      AND (#{roleGroup} IS NULL OR #{roleGroup} = '' OR ROLE_GROUP = #{roleGroup})
+      AND (#{permissions} IS NULL OR #{permissions} = '' OR PERMISSIONS = #{permissions})
+      AND (#{sort} IS NULL OR #{sort} = '' OR SORT = #{sort})
+      AND (#{remarks} IS NULL OR #{remarks} = '' OR REMARKS = #{remarks})
     ]]>
   </select>
 </mapper>
