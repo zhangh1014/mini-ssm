@@ -76,7 +76,7 @@
 		<!-- minifw -->
 		<dependency>
 			<groupId>org.lechisoft.minifw</groupId>
-			<artifactId>mini-log</artifactId>
+			<artifactId>mini-common</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>

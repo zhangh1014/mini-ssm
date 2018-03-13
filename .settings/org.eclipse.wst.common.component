@@ -4,10 +4,13 @@
         <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
-        <dependent-module archiveName="mini-log-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mini-log/mini-log">
+        <dependent-module archiveName="mini-common-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mini-common/mini-common">
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <dependent-module archiveName="mini-jdbc-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mini-jdbc/mini-jdbc">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="mini-log-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mini-log/mini-log">
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <dependent-module archiveName="mini-security-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mini-security/mini-security">
